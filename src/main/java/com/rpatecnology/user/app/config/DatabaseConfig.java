@@ -12,13 +12,14 @@ import javax.sql.DataSource;
 
 @Configuration
 public class DatabaseConfig {
-    @Bean(name = {"db_desa"})
+    @Bean(name = {"db_source_desa"})
     @Primary
     @ConfigurationProperties(prefix = "desa.datasource")
     public DataSource hostDataSource(){
         return DataSourceBuilder.create().build();
     }
-    public JdbcTemplate hostJdbcTemplate(@Qualifier("db_desa") DataSource dbconexion){
+    @Bean(name = {"db_desa_user"})
+    public JdbcTemplate hostJdbcTemplate(@Qualifier("db_source_desa") DataSource dbconexion){
         return new JdbcTemplate(dbconexion);
     }
 }
